@@ -8,7 +8,7 @@ python tongda.py url.txt
 
 当前目录vuln.txt存放上传的webshell地址
 ## 已测试版本
-v2017 v11
+v2017   v11
 
 ## Referrer
 https://github.com/NS-Sp4ce/TongDaOA-Fake-User
