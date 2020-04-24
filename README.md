@@ -2,7 +2,7 @@
 通达oa 越权登录 + 上传getshell
 
 ### usage
-python tongda.py
+#### python tongda.py
 
 url.txt： 测试url，支持批量
 
