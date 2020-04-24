@@ -2,11 +2,14 @@
 通达oa 越权登录 + 上传getshell
 
 ### usage
-python tongda.py url.txt
+python tongda.py
 
-默认一句话密码a
+url.txt： 测试url，支持批量
 
-上传成功的webshell会记录在当前目录vuln.txt
+vuln.txt：上传成功的webshell
+
+上传的默认一句话shell密码a
+
 ## 已测试版本
 v11
 
